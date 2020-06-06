@@ -6,6 +6,10 @@
   font-family: "montaga";
   src: url("Montaga-Regular.ttf") format('truetype');
 }
+@@keyframes expand {
+  from { background-color: black ;}
+  to { background-color: white ;}
+}
 html,body{
   //background: #704214;
   background: #EFDECD;
@@ -62,4 +66,12 @@ em{
   height:10vw;
   top: 100%;
   transform: translate(-50%,-40%);
+  z-index: 1;
+}
+.splash{
+  width:90vw;
+  transform:  translate(0%, -60%) rotate(225deg);
+  position:relative;
+  top: 30vh;
+  left: 15%;
 }

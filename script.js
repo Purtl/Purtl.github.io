@@ -1,41 +1,48 @@
-var dotMax,dotMin,dotPos
+var dotMax,dotMin;
 var dot=document.getElementsByClassName("dot")[0];
-var dotTrans = window.getComputedStyle(dot).transform;
-
-// sets dot to specific y-coordination
-function setDot(yCoord)
-{
-  let setTop =  Math.min(Math.max(yCoord, dotMin), dotMax);
-  dotPos = setTop/dotMax;
-  console.log(dotPos);
-  dot.style.top = setTop + "px";
-}
 
 // moves dot relative to position
 function moveDot(move)
 {
-  let top = parseInt(window.getComputedStyle(dot).top);
-  let newTop = top - move;
-  setDot(newTop);
-}
+  let oldTop = parseInt(window.getComputedStyle(dot).top);
+  let newTop =  Math.min(Math.max(oldTop - move, dotMin), dotMax);
+  let dotRel = newTop/dotMax;
+  dot.style.setProperty("top",dotRel*100 + "%");
+  if(newTop <= dotMin)
+  {
+    window.removeEventListener('wheel', dotEvent);
+    let img = document.createElement("img");
+    img.src = "splash.svg";
+    img.classList.add("splash");
 
-function resizeDot(pos)
-{
-  dot.style.transform = dotTrans + " scale("+ pos +")";
+    let p = dot.parentNode;
+    p.appendChild(img);
+    p.removeChild(document.getElementsByClassName("welcome")[0]);
+    dot.style.setProperty("width", "1px");
+    dot.style.setProperty("height", "1px");
+    dot.style.setProperty("transition-timing-function", "ease-in");
+    dot.style.setProperty("transition-duration", "2s");
+    dot.style.setProperty("transition-delay", ".5s");
+    dot.style.setProperty("transition-property", "width, height");
+    dot.style.setProperty("width", "200vmax");
+    dot.style.setProperty("height", "200vmax");
+    dotRel = 1;
+  }
+  return dotRel;
 }
 
 function dotEvent(e){
-  let move = e.deltaY;
-  moveDot(move);
-  resizeDot(dotPos);
+  let dotPos = moveDot(e.deltaY);
+  // resize the dot (ugly but don't always want to calc the matrix)
+  dot.style.setProperty("transform", "translate(-50%, -40%) scale("+ Math.pow(dotPos,2) +")");
+  console.log(dotPos);
 }
 
 // (re-)initializes maximas on start and resize
 function initMove()
 {
   dotMax = document.documentElement.clientHeight;
-  dotMin = document.documentElement.clientHeight*0.32;
-  dotPos ? setDot(dotMax*dotPos) : moveDot(0);
+  dotMin = dotMax*0.32;
 }
 
 window.addEventListener('resize', initMove);
