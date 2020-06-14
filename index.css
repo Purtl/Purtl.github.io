@@ -34,15 +34,16 @@ em{
   font-family: "monsieur";
   color: black;
   /* color: #003595; */
-  line-height: 50%;
+  line-height: .5;
 }
 
 .welcome p{
-  margin: 0px;
+  margin-top: 1rpx;
   font-size: 1.65vw;
   font-weight: 100;
   color:#aaa;
   font-family: "montaga";
+  line-height: 1;
 }
 .light{
   position: fixed;

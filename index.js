@@ -1,4 +1,4 @@
-var dotMax,dotMin;
+var dotMax,dotMin,tBase;
 var dot=document.getElementsByClassName("dot")[0];
 
 // moves dot relative to position
@@ -11,6 +11,8 @@ function moveDot(move)
   if(newTop <= dotMin)
   {
     window.removeEventListener('wheel', dotEvent);
+    window.removeEventListener('touchStart', tStart);
+    // window.removeEventListener('touchEnd', tEnd);
     let img = document.createElement("img");
     img.src = "splash.svg";
     img.classList.add("splash");
@@ -28,16 +30,13 @@ function moveDot(move)
     dot.style.setProperty("height", "200vmax");
     dotRel = 1;
   }
-  return dotRel;
+  dot.style.setProperty("transform", "translate(-50%, -40%) scale("+ Math.pow(dotRel,2) +")");
 }
 
-function dotEvent(e){
-  let dotPos = moveDot(e.deltaY);
-  // resize the dot (ugly but don't always want to calc the matrix)
-  dot.style.setProperty("transform", "translate(-50%, -40%) scale("+ Math.pow(dotPos,2) +")");
-  console.log(dotPos);
+function dotEvent(e)
+{
+  moveDot(e.deltaY);
 }
-
 // (re-)initializes maximas on start and resize
 function initMove()
 {
@@ -45,7 +44,20 @@ function initMove()
   dotMin = dotMax*0.32;
 }
 
-window.addEventListener('resize', initMove);
+function tStart(e)
+{
+  tBase = e.changedTouches[0].pageY;
+  window.addEventListener('touchmove', tMove );
+}
+
+function tMove(e)
+{
+  moveDot(tBase - e.changedTouches[0].pageY);
+}
+
+window.addEventListener('resize', initMove );
 window.addEventListener('wheel', dotEvent );
+window.addEventListener('touchstart', tStart );
+window.addEventListener('touchend', () => window.removeEventListener('touchmove', tMove ));
 
 initMove();
