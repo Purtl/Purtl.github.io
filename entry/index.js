@@ -14,7 +14,7 @@ function moveDot(move)
     window.removeEventListener('touchStart', tStart);
     // window.removeEventListener('touchEnd', tEnd);
     let img = document.createElement("img");
-    img.src = "splash.svg";
+    img.src = "entry/splash.svg";
     img.classList.add("splash");
 
     let p = dot.parentNode;
@@ -29,6 +29,7 @@ function moveDot(move)
     dot.style.setProperty("width", "200vmax");
     dot.style.setProperty("height", "200vmax");
     dotRel = 1;
+    dot.addEventListener('transitionend', () => window.location.replace("universe.html") );
   }
   dot.style.setProperty("transform", "translate(-50%, -40%) scale("+ Math.pow(dotRel,2) +")");
 }
