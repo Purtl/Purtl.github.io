@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "monsieur";
+  src: url("MonsieurLaDoulaise-Regular.ttf") format('truetype');
+}
+@font-face {
+  font-family: "montaga";
+  src: url("Montaga-Regular.ttf") format('truetype');
+}
+@font-face {
+  font-family: "BLK";
+  src: url("BLKCHCRY.TTF") format('truetype');
+}
+@keyframes expand {
+  from { background-color: black ;}
+  to { background-color: white ;}
+}
+
+html,body{
+  background: #EFDECD;
+  margin:0;
+  font-family: "BLK";
+}
+em{
+  font-style: normal;
+}
+
+h1, h2{
+  text-align: center;
+  }
+
+  div{
+	  width: 66%;
+	  margin: auto;
+  }
+
+  .emp{
+	  width: 90%;
+	  margin: auto;
+	  font-family: cursive;
+  }
