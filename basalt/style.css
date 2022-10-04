@@ -38,3 +38,6 @@ h1, h2{
 	  margin: auto;
 	  font-family: cursive;
   }
+  img {
+	  width: 100%;
+  }
